@@ -17,15 +17,15 @@ They would like a product that can predict when a failure would occur. In additi
 
 The manufacturing company has provided us with an estimated 428 hours of data for one of their machines. The dataset providede consists of 10 000 data points stored as rows with 14 features in columns
 
-UID: unique identifier ranging from 1 to 10000
-productID: consisting of a letter L, M, or H for low (50% of all products), medium (30%), and high (20%) as product quality variants and a variant-specific serial number
-air temperature [K]: generated using a random walk process later normalized to a standard deviation of 2 K around 300 K
-process temperature [K]: generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K.
-rotational speed [rpm]: calculated from powepower of 2860 W, overlaid with a normally distributed noise
-torque [Nm]: torque values are normally distributed around 40 Nm with an Ïƒ = 10 Nm and no negative values.
-tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of tool wear to the used tool in the process. and a
-'Target' label that indicates, whether the machine has failed in this particular data point for any of the following failure modes are true.
-Failure Type: Organized into 5 different types: No Failure, Heat Dissipation Failure, Power Failure, Tool Wear Failure, Random Failure
+- UID: unique identifier ranging from 1 to 10000
+- productID: consisting of a letter L, M, or H for low (50% of all products), medium (30%), and high (20%) as product quality variants and a variant-specific serial number
+- air temperature [K]: generated using a random walk process later normalized to a standard deviation of 2 K around 300 K
+- process temperature [K]: generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K.
+- rotational speed [rpm]: calculated from powepower of 2860 W, overlaid with a normally distributed noise
+- torque [Nm]: torque values are normally distributed around 40 Nm with an Ïƒ = 10 Nm and no negative values.
+- tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of tool wear to the used tool in the process. and a
+- 'Target' label that indicates, whether the machine has failed in this particular data point for any of the following failure modes are true.
+- Failure Type: Organized into 5 different types: No Failure, Heat Dissipation Failure, Power Failure, Tool Wear Failure, Random Failure
 
 
 ### Data Preprocessing
@@ -62,8 +62,8 @@ After determining our final model, we determined the importance of each variable
 
 Next steps beyond this investigation would be to:
 
-- Collect additional data on the current machine being analyzed. The current model has good results, but we would want to confirm those results with additional data
-- This data only applies to one machine for the Northrup Grumman plant. We would want to start to collect data on the other machines in the plant to setermine failures for those machines as well. The end result is to improve the efficiency for the whole manufacturing process and not just one step in the process.
+- Collect additional data on the current machine being analyzed. The current model has good results, but we would want to confirm those results by testing the model on additional data.
+- This data only applies to one machine for the Northrup Grumman plant. We would want to start to collect data on the other machines in the plant to determine failures for those machines as well. The end result is to improve the efficiency for the whole manufacturing process and not just one step in the process.
 
 
 ## Repository Navigation
