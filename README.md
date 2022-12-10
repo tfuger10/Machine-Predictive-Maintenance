@@ -10,22 +10,24 @@ The following project is a hypothetical scenario. Since real predictive maintena
 
 A manufacturer in custom metal products (Northrup Grumman) has approached our company looking to reduce the amount of downtime on their machines in their facility. In order to do so, they intend to focus on preventative maintenance procedures to avoid machine failures. A machine failure can occur for a variety of reasons which leads to a stop in the manufacturing process, and is creating a bottleneck in production at times when their machines are most needed. In addition, some failures result in damage to the machine, which can incur additional maintenance over time. 
 
-They would like a product that can predict when a failure would occur. In addition, if a failure does occur, we want to identify what type of failure would occur. If we should be successful in assisting their company, they would be willing to invest additional resources gathering data for other machines in order to reduce downtime for them as well. They have a high requirement for accuracy as the current downtimes in machinery are costing the company thousands of dollars. They would like to predict failure type with less than 5% error of accuracy, and precision.
+They would like a product that can predict when a failure would occur. In addition, if a failure does occur, we want to identify what type of failure would occur. If we should be successful in assisting their company, they would be willing to invest additional resources gathering data for other machines in order to reduce downtime for them as well. They have a high requirement in predicting as few false negatives (predicting a no failure when it would really be a failure) as possible. It costs little additional money to setup preventative maintenance and plan for a false positive, but a false negative would mean an unexpected failure. This and false negatives would be detrimental to downtime for the machines and costly for the business.
 
 
 ### Data
 
-The manufacturing company has provided us with an estimated 428 hours of data for one of their machines. The dataset providede consists of 10 000 data points stored as rows with 14 features in columns
+The manufacturing company has provided us with an estimated 428 hours of data for one of their machines. The dataset providede consists of 10 000 data points stored as rows with 9 columns
 
-- UID: unique identifier ranging from 1 to 10000
-- productID: consisting of a letter L, M, or H for low (50% of all products), medium (30%), and high (20%) as product quality variants and a variant-specific serial number
-- air temperature [K]: generated using a random walk process later normalized to a standard deviation of 2 K around 300 K
-- process temperature [K]: generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K.
-- rotational speed [rpm]: calculated from powepower of 2860 W, overlaid with a normally distributed noise
-- torque [Nm]: torque values are normally distributed around 40 Nm with an Ïƒ = 10 Nm and no negative values.
-- tool wear [min]: The quality variants H/M/L add 5/3/2 minutes of tool wear to the used tool in the process. and a
-- 'Target' label that indicates, whether the machine has failed in this particular data point for any of the following failure modes are true.
-- Failure Type: Organized into 5 different types: No Failure, Heat Dissipation Failure, Power Failure, Tool Wear Failure, Random Failure
+| Column Name  | Description  |
+|---|---|
+| UID  | unique identifier ranging from 1 to 10000  |
+| productID  | consisting of a letter L, M, or H for low (50% of all products), medium (30%), and high (20%) as product quality variants and a variant-specific serial number  |
+| air temperature [K]  | generated using a random walk process later normalized to a standard deviation of 2 K around 300 K  |
+| process temperature [K]  | generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K  |
+| rotational speed [rpm]  | generated using a random walk process normalized to a standard deviation of 1 K, added to the air temperature plus 10 K  |
+|  torque [Nm] |  torque values are normally distributed around 40 Nm with an Ïƒ = 10 Nm and no negative values |
+| tool wear [min]  |  The quality variants H/M/L add 5/3/2 minutes of tool wear to the used tool in the process |
+| Target  |  label that indicates, whether the machine has failed in this particular data point for any of the following failure modes are true |
+| Failure Type  | Organized into 5 different types: No Failure, Heat Dissipation Failure, Power Failure, Tool Wear Failure, Random Failure  |
 
 
 ### Data Preprocessing
@@ -46,16 +48,24 @@ We immediately started to see trends in the data for what we wanted to avoid whe
 
 ## Modeling and Model Interpretation
 
-We created 3 baseline classifier models using Knearest neighbors, Decision tree, and Random Forest. We then used GridSearchCV to tune the hyper parameters and obtain better results. We found that the Random forest and Decision Tree models performed the best, and we took those 2 models and applied a StandardScaler to the model to improve the performance even more. We ultimately ended up with a Random Forest model which had a 99% accuracy and 97% precision.
+We created 3 baseline classifier models using Knearest neighbors, Balanced Bagging, and Random Forest.  We found that the Random forest and Balanced Bagging models performed the best, and we took those 2 models and applied a StandardScaler to the model but that decreased performance. We then used GridSearchCV to tune the hyper parameters for Random Forest and obtain better results. We ultimately ended up with a Balanced Bagging model that reduced the number of false negatives we had to only 9 for the multiclass model and 6 for the binary model.
 
-![My Image](images/RFC-CM.png)
+![My Image](images/RFC-BBC.png)
 
-In addition to falling with our required accuracy and precision ranges, the only true class failures predicted incorrectly were power failure and tool wear failure. While both of these failure still cost money, the overall cost of a power failure is a matter of lost time, and the cost of a tool wear failure would be lost time and the price of a new tool. A heat dissipation or overstrain failure are much more expensive failures that damage the lifetime of the machine.
+![My Image](images/BBC-CM2.png)
+
 
 After determining our final model, we determined the importance of each variable, which can help the client which variables to focus on first in their new maintenance program they intend to implement to prevent these failures. Torque is the most important features that factors into the failure.
 
+
 ![My Image](images/Variable-Importance.png)
 
+
+We removed the upper and lower bounds of the data as they relate to torque. Removing this data not only removed a number of failures but also increased the results of our model when run through this new dataset. The binary model with this data only predicted 1 false negative out of 1904 data points.
+
+![My Image](images/BBC-CM3.png)
+
+![My Image](images/BBC-CM4.png)
 
 
 ### Next Steps
