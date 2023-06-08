@@ -80,15 +80,15 @@ Next steps beyond this investigation would be to:
 
 In this repository you will find 5 files to take note of:
 
-- [Jupyter Notebook](Notebook.ipynb) contains all of the code for this project
+- [EDA-Modeling-Evaluation](EDA-Modeling-Evaluation.ipynb) contains all of the code for this project
 
 - [predictive maintenance](data/predictive_maintenance.csv) contains the data from 
 
 - [images](images) folder contains all the images that are used in the markdown file
 
-- [Machine Predictive Maintenance](Machine-Predictive-Maintenance.pptx) powerpoint file
+- [Machine Predictive Maintenance](presentation/Machine-Predictive-Maintenance.pptx) powerpoint file
 
-- [Machine Predictive Maintenance](Machine-Predictive-Maintenance.pdf) pdf file
+- [Machine Predictive Maintenance](presentation/Machine-Predictive-Maintenance.pdf) pdf file
 
 
 For additional info, contact Tim Fuger at tfuger10@gmail.com
